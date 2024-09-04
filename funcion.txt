@@ -1,0 +1,79 @@
+!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Búsqueda Oculta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        #resultsList {
+            list-style-type: none;
+            padding: 0;
+        }
+        #resultsList li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Barra de Búsqueda con Elementos Ocultos</h1>
+    <input type="text" id="searchInput" placeholder="Buscar...">
+    <ul id="resultsList" class="hidden"></ul>
+
+    <script>
+        // Lista de elementos para buscar (ocultos inicialmente)
+        const items = [
+            "Manzana", "Banana", "Cereza", "Dátil", "Elderberry",
+            "Fresa", "Guayaba", "Higo", "Ilama", "Jackfruit"
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const resultsList = document.getElementById('resultsList');
+
+        // Función para actualizar los resultados
+        function updateResults() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            if (searchTerm.length === 0) {
+                resultsList.innerHTML = '';
+                resultsList.classList.add('hidden');
+                return;
+            }
+
+            const filteredItems = items.filter(item => 
+                item.toLowerCase().includes(searchTerm)
+            );
+            
+            resultsList.innerHTML = '';
+            if (filteredItems.length > 0) {
+                filteredItems.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    resultsList.appendChild(li);
+                });
+                resultsList.classList.remove('hidden');
+            } else {
+                resultsList.classList.add('hidden');
+            }
+        }
+
+        // Escuchar cambios en el input
+        searchInput.addEventListener('input', updateResults);
+    </script>
+</body>
+</html>
